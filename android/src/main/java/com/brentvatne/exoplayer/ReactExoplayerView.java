@@ -159,6 +159,7 @@ class ReactExoplayerView extends FrameLayout implements
     private float audioVolume = 1f;
     private int minLoadRetryCount = 3;
     private int maxBitRate = 0;
+    private int minBitRate = 0;
     private long seekTime = C.TIME_UNSET;
     private boolean hasDrmFailed = false;
     private boolean isUsingContentResolution = false;
@@ -570,7 +571,9 @@ class ReactExoplayerView extends FrameLayout implements
         ExoTrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory();
         self.trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
         self.trackSelector.setParameters(trackSelector.buildUponParameters()
-                .setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate));
+            .setMinVideoBitrate(minBitRate == 0 ? Integer.MIN_VALUE : minBitRate)
+            .setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate)
+        );
 
         DefaultAllocator allocator = new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE);
         RNVLoadControl loadControl = new RNVLoadControl(
@@ -1699,11 +1702,19 @@ class ReactExoplayerView extends FrameLayout implements
         }
     }
 
+    public void setMinBitRateModifier(int newMinBitRate) {
+        minBitRate = newMinBitRate;
+        if (player != null) {
+            trackSelector.setParameters(trackSelector.buildUponParameters()
+                .setMinVideoBitrate(minBitRate == 0 ? Integer.MIN_VALUE : minBitRate));
+        }
+    }
+
     public void setMaxBitRateModifier(int newMaxBitRate) {
         maxBitRate = newMaxBitRate;
         if (player != null) {
             trackSelector.setParameters(trackSelector.buildUponParameters()
-                    .setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate));
+                .setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate));
         }
     }
 

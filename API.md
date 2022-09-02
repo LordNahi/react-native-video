@@ -283,6 +283,7 @@ var styles = StyleSheet.create({
 |[headers](#headers)|Android|
 |[hideShutterView](#hideshutterview)|Android|
 |[ignoreSilentSwitch](#ignoresilentswitch)|iOS|
+|[minBitRate](#minbitrate)|Android|
 |[maxBitRate](#maxbitrate)|Android, iOS|
 |[minLoadRetryCount](#minLoadRetryCount)|Android|
 |[mixWithOthers](#mixWithOthers)|iOS|
@@ -535,6 +536,16 @@ Controls the iOS silent switch behavior
 * **"obey"** - Don't play audio if the silent switch is set
 
 Platforms: iOS
+
+#### minBitRate
+Sets the desired limit, in bits per second, of network bandwidth consumption when multiple video streams are available for a playlist.
+
+Default: 0. Don't limit the minBitRate.
+
+Example:
+```
+minBitRate={2000000} // 2 megabits
+```
 
 #### maxBitRate
 Sets the desired limit, in bits per second, of network bandwidth consumption when multiple video streams are available for a playlist.
