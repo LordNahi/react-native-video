@@ -301,6 +301,8 @@ export default class Video extends Component {
     }
 
     const nativeProps = Object.assign({}, this.props);
+    const fuck = source.headers ? this.stringsOnlyObject(source.headers) : {};
+    console.log("FUCK", fuck);
     Object.assign(nativeProps, {
       style: [styles.base, nativeProps.style],
       resizeMode: nativeResizeMode,
@@ -312,7 +314,7 @@ export default class Video extends Component {
         type: source.type || '',
         mainVer: source.mainVer || 0,
         patchVer: source.patchVer || 0,
-        requestHeaders: source.headers ? this.stringsOnlyObject(source.headers) : {},
+        requestHeaders: fuck,
       },
       onVideoLoadStart: this._onLoadStart,
       onVideoPlaybackStateChanged: this._onPlaybackStateChanged,
