@@ -86,7 +86,6 @@ public class DataSourceUtil {
         ForwardingCookieHandler handler = new ForwardingCookieHandler(context);
         container.setCookieJar(new JavaNetCookieJar(handler));
         OkHttpDataSource.Factory okHttpDataSourceFactory = new OkHttpDataSource.Factory((Call.Factory) client)
-                .setUserAgent(getUserAgent(context))
                 .setTransferListener(bandwidthMeter);
 
         if (requestHeaders != null)
